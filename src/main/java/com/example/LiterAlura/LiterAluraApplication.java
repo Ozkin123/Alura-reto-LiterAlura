@@ -1,6 +1,6 @@
 package com.example.LiterAlura;
 
-import com.example.LiterAlura.model.DatosLibros;
+import com.example.LiterAlura.model.DatosLibro;
 import com.example.LiterAlura.service.ConsumeAPI;
 import com.example.LiterAlura.service.ConvierteDatos;
 import org.springframework.boot.CommandLineRunner;
@@ -17,9 +17,10 @@ public class LiterAluraApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		var consumeApi = new ConsumeAPI();
-		var json = consumeApi.obternerDatos("http://gutendex.com/books/");
-		var conversor = new ConvierteDatos();
-		var datos = conversor.obtenerDatos(json, DatosLibros.class);
+		var json = consumeApi.obternerDatos("http://gutendex.com/books/5/");
+		System.out.println(json);
+		ConvierteDatos convierteDatos = new ConvierteDatos();
+		var datos= convierteDatos.obtenerDatos(json, DatosLibro.class);
 		System.out.println(datos);
 
 	}
