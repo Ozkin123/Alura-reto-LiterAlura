@@ -17,5 +17,6 @@ public class LiterAluraApplication implements CommandLineRunner {
 		var consumeApi = new ConsumeAPI();
 		var json = consumeApi.obternerDatos("http://gutendex.com/books/");
 		System.out.println(json);
+		// comentario a borrar
 	}
 }
