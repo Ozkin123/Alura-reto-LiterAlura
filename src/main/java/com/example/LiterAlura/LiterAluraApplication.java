@@ -21,16 +21,16 @@ public class LiterAluraApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		var consumeApi = new ConsumeAPI();
-		var json = consumeApi.obternerDatos(URLApiGutendex.URL_LIBROS+"poooodsd");
+		var json = consumeApi.obternerDatos(URLApiGutendex.URL_LIBROS+"pi");
 		System.out.println(json);
 		ConvierteDatos convierteDatos = new ConvierteDatos();
 		var datos= convierteDatos.obtenerDatos(json, DatosListaLibros.class);
-		Optional<String> libroBusqueda =datos.libros().stream().map(e->e.title()).findFirst();
-		if(libroBusqueda.isPresent()){
-			System.out.println(libroBusqueda);
-		}else System.out.println("libro no encontrado");
+		//Optional<String> libroBusqueda =datos.libros().stream().map(e->e.title()).findAny();
+		//if(libroBusqueda.isPresent()){
+		//	System.out.println(libroBusqueda.get());
+		//}else System.out.println("libro no encontrado");
 
-		System.out.println();
+		System.out.println(datos);
 
 	}
 }
