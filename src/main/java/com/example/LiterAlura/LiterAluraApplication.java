@@ -18,7 +18,7 @@ public class LiterAluraApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		var consumeApi = new ConsumeAPI();
-		var json = consumeApi.obternerDatos(URLApiGutendex.URL_BASE);
+		var json = consumeApi.obternerDatos(URLApiGutendex.URL_LIBROS+"dickens");
 		System.out.println(json);
 		ConvierteDatos convierteDatos = new ConvierteDatos();
 		var datos= convierteDatos.obtenerDatos(json, DatosLibro.class);
