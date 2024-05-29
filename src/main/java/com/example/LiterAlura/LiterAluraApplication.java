@@ -1,7 +1,7 @@
 package com.example.LiterAlura;
 
 import com.example.LiterAlura.constantes.URLApiGutendex;
-import com.example.LiterAlura.model.DatosLibro;
+import com.example.LiterAlura.model.DatosListaLibros;
 import com.example.LiterAlura.service.ConsumeAPI;
 import com.example.LiterAlura.service.ConvierteDatos;
 import org.springframework.boot.CommandLineRunner;
@@ -21,7 +21,7 @@ public class LiterAluraApplication implements CommandLineRunner {
 		var json = consumeApi.obternerDatos(URLApiGutendex.URL_LIBROS+"dickens");
 		System.out.println(json);
 		ConvierteDatos convierteDatos = new ConvierteDatos();
-		var datos= convierteDatos.obtenerDatos(json, DatosLibro.class);
+		var datos= convierteDatos.obtenerDatos(json, DatosListaLibros.class);
 		System.out.println(datos);
 
 	}
