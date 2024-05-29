@@ -1,5 +1,6 @@
 package com.example.LiterAlura;
 
+import com.example.LiterAlura.constantes.URLApiGutendex;
 import com.example.LiterAlura.model.DatosLibro;
 import com.example.LiterAlura.service.ConsumeAPI;
 import com.example.LiterAlura.service.ConvierteDatos;
@@ -17,7 +18,7 @@ public class LiterAluraApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		var consumeApi = new ConsumeAPI();
-		var json = consumeApi.obternerDatos("https://gutendex.com/books/?search=bible");
+		var json = consumeApi.obternerDatos(URLApiGutendex.URL_BASE);
 		System.out.println(json);
 		ConvierteDatos convierteDatos = new ConvierteDatos();
 		var datos= convierteDatos.obtenerDatos(json, DatosLibro.class);
