@@ -1,6 +1,5 @@
 package com.example.LiterAlura.model.dto;
 
-import com.example.LiterAlura.model.DatosAutores;
 import com.example.LiterAlura.model.DatosLibro;
 
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.stream.Collectors;
 public class LibroAMostrar {
     private String titulo;
 
-    private List<String> autores;
+    private List<AutoresAMostrar> autores;
     private List<String> lenguajes;
 
 
@@ -18,7 +17,7 @@ public class LibroAMostrar {
 
     public LibroAMostrar(DatosLibro datosLibro){
         this.titulo=datosLibro.title();
-        this.autores=datosLibro.autores().stream().map(DatosAutores::nombre).collect(Collectors.toList());
+        this.autores=datosLibro.autores().stream().map(AutoresAMostrar::new).collect(Collectors.toList());
         this.lenguajes=datosLibro.lenguajes();
         this.descargas=datosLibro.descargas();
     }
@@ -31,11 +30,11 @@ public class LibroAMostrar {
         this.titulo = titulo;
     }
 
-    public List<String> getAutores() {
+    public List<AutoresAMostrar> getAutores() {
         return autores;
     }
 
-    public void setAutores(List<String> autores) {
+    public void setAutores(List<AutoresAMostrar> autores) {
         this.autores = autores;
     }
 
