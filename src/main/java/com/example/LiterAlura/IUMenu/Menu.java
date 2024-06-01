@@ -1,19 +1,17 @@
 package com.example.LiterAlura.IUMenu;
 
-import com.example.LiterAlura.constantes.URLApiGutendex;
-import com.example.LiterAlura.model.DatosListaLibros;
-import com.example.LiterAlura.service.ConsumeAPI;
-import com.example.LiterAlura.service.ConvierteDatos;
-import com.example.LiterAlura.service.MetodoALlamar;
+import com.example.LiterAlura.service.BuscadorLibro;
 
 import java.util.InputMismatchException;
-import java.util.Optional;
 import java.util.Scanner;
 
 public class Menu {
 
+     private String librobuscado;
+     private Scanner scanner = new Scanner(System.in);
+     private BuscadorLibro buscadorLibro = new BuscadorLibro();
 
-    public static void MostrarMenu(){
+    public void MostrarMenu(){
         int opcion =-1;
         do{
             System.out.println("Que desea hacer");
@@ -26,7 +24,7 @@ public class Menu {
             System.out.println();
             System.out.println("0. Salir"
             );
-            Scanner scanner = new Scanner(System.in);
+
 
             try {
                 opcion= scanner.nextInt();
@@ -34,8 +32,9 @@ public class Menu {
             }
             switch (opcion){
                 case 1:
-                    System.out.println("Libro es");
-                    scanner.nextLine();
+                    System.out.println("Escriba libro deseado");
+                    librobuscado= scanner.nextLine();
+                    buscadorLibro.BuscarLibro(librobuscado);
                     break;
                 case 2:
                     System.out.println("Libro registrados");

@@ -1,6 +1,7 @@
 package com.example.LiterAlura;
 
 import com.example.LiterAlura.IUMenu.Menu;
+import com.example.LiterAlura.service.BuscadorLibro;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,8 +17,8 @@ public class LiterAluraApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-
-		Menu.MostrarMenu();
+		Menu menu = new Menu();
+		menu.MostrarMenu();
 
 	}
 }
