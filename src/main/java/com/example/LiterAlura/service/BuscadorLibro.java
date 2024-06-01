@@ -3,6 +3,7 @@ package com.example.LiterAlura.service;
 import com.example.LiterAlura.constantes.URLApiGutendex;
 import com.example.LiterAlura.model.DatosLibro;
 import com.example.LiterAlura.model.DatosListaLibros;
+import com.example.LiterAlura.model.dto.LibroAMostrar;
 
 import java.util.Optional;
 import java.util.Scanner;
@@ -20,7 +21,8 @@ public class BuscadorLibro {
         var datos= convierteDatos.obtenerDatos(json, DatosListaLibros.class);
         Optional<DatosLibro> libroBusqueda =datos.libros().stream().findFirst();
         if(libroBusqueda.isPresent()){
-            System.out.println(libroBusqueda.get());
+           LibroAMostrar libroAMostrar= new LibroAMostrar(libroBusqueda.get());
+            System.out.println(libroAMostrar);
         }else {System.out.println("libro no encontrado");
         }
 
