@@ -1,14 +1,26 @@
 package com.example.LiterAlura.model.dto;
 
 import com.example.LiterAlura.model.DatosLibro;
+import jakarta.persistence.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Entity
+@Table(name = "libros")
 public class LibroAMostrar {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
+
+    @Column(unique = true)
     private String titulo;
 
+    @Transient
     private List<AutoresAMostrar> autores;
+
+    @Transient
     private List<String> lenguajes;
 
 
@@ -20,6 +32,14 @@ public class LibroAMostrar {
         this.autores=datosLibro.autores().stream().map(AutoresAMostrar::new).collect(Collectors.toList());
         this.lenguajes=datosLibro.lenguajes();
         this.descargas=datosLibro.descargas();
+    }
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
     }
 
     public String getTitulo() {
