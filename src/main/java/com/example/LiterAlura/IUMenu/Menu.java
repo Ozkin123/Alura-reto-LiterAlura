@@ -5,24 +5,19 @@ import com.example.LiterAlura.model.DatosLibro;
 import com.example.LiterAlura.model.DatosListaLibros;
 import com.example.LiterAlura.model.dto.LibroAMostrar;
 import com.example.LiterAlura.repository.LibrosRepository;
-import com.example.LiterAlura.service.BuscadorLibro;
 import com.example.LiterAlura.service.ConsumeAPI;
 import com.example.LiterAlura.service.ConvierteDatos;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 
 import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.Scanner;
 
-@Component
 public class Menu {
     private ConsumeAPI consumeApi = new ConsumeAPI();
     private ConvierteDatos convierteDatos = new ConvierteDatos();
     private Scanner scanner = new Scanner(System.in);
 
-    private BuscadorLibro buscadorLibro = new BuscadorLibro();
 
     private LibrosRepository librosRepository;
 
@@ -48,6 +43,7 @@ public class Menu {
 
             try {
                 opcion= scanner.nextInt();
+                scanner.nextLine();
             }catch (InputMismatchException e){
             }
             switch (opcion){
