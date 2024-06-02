@@ -26,6 +26,8 @@ public class LibroAMostrar {
 
     private Integer descargas;
 
+    public LibroAMostrar(){}
+
 
     public LibroAMostrar(DatosLibro datosLibro){
         this.titulo=datosLibro.title();

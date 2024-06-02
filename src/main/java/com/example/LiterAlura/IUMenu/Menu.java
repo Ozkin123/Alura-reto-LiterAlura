@@ -1,15 +1,35 @@
 package com.example.LiterAlura.IUMenu;
 
+import com.example.LiterAlura.constantes.URLApiGutendex;
+import com.example.LiterAlura.model.DatosLibro;
+import com.example.LiterAlura.model.DatosListaLibros;
+import com.example.LiterAlura.model.dto.LibroAMostrar;
+import com.example.LiterAlura.repository.LibrosRepository;
 import com.example.LiterAlura.service.BuscadorLibro;
+import com.example.LiterAlura.service.ConsumeAPI;
+import com.example.LiterAlura.service.ConvierteDatos;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 
 import java.util.InputMismatchException;
+import java.util.Optional;
 import java.util.Scanner;
 
+@Component
 public class Menu {
+    private ConsumeAPI consumeApi = new ConsumeAPI();
+    private ConvierteDatos convierteDatos = new ConvierteDatos();
+    private Scanner scanner = new Scanner(System.in);
 
-     private String librobuscado;
-     private Scanner scanner = new Scanner(System.in);
-     private BuscadorLibro buscadorLibro = new BuscadorLibro();
+    private BuscadorLibro buscadorLibro = new BuscadorLibro();
+
+    private LibrosRepository librosRepository;
+
+    public Menu(LibrosRepository librosRepository) {
+        this.librosRepository =librosRepository;
+    }
+
 
     public void MostrarMenu(){
         int opcion =-1;
@@ -33,8 +53,7 @@ public class Menu {
             switch (opcion){
                 case 1:
                     System.out.println("Escriba libro deseado");
-                    librobuscado= scanner.nextLine();
-                    buscadorLibro.BuscarLibro(librobuscado);
+                    BuscarLibro();
                     break;
                 case 2:
                     System.out.println("Libro registrados");
@@ -65,6 +84,22 @@ public class Menu {
 
         System.out.println("vuelva pronto");
 
+
+    }
+    public  void BuscarLibro(){
+
+        String libroDeseado=scanner.nextLine();
+        var json = consumeApi.obternerDatos(URLApiGutendex.URL_LIBROS+libroDeseado.replace(" ","%20"));
+
+        var datos= convierteDatos.obtenerDatos(json, DatosListaLibros.class);
+        Optional<DatosLibro> libroBusqueda =datos.libros().stream().findFirst();
+        if(libroBusqueda.isPresent()){
+            LibroAMostrar libroAMostrar= new LibroAMostrar(libroBusqueda.get());
+            System.out.println(libroAMostrar);
+            librosRepository.save(libroAMostrar);
+
+        }else {System.out.println("libro no encontrado");
+        }
 
     }
 
