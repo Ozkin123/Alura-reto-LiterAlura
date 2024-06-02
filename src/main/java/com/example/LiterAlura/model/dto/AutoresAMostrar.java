@@ -18,6 +18,7 @@ public class AutoresAMostrar {
     private int fechaMuerte;
 
     @ManyToOne
+    @JoinColumn(name = "libros")
     private LibroAMostrar libroAMostrar;
 
     public AutoresAMostrar(){}
@@ -26,6 +27,17 @@ public class AutoresAMostrar {
         this.nombre= datosAutores.nombre();
         this.fechaNacimiento=datosAutores.fechaNacimiento();
         this.fechaMuerte=datosAutores.fechaMuerte();
+    }
+
+
+
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
     }
 
     public String getNombre() {

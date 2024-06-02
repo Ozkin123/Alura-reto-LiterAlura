@@ -18,10 +18,10 @@ public class LibroAMostrar {
     private String titulo;
 
 
-    @OneToMany(mappedBy = "libroAMostrar")
+    @OneToMany(mappedBy = "libroAMostrar", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<AutoresAMostrar> autores;
 
-    @Transient
+
     private List<String> lenguajes;
 
 
@@ -45,6 +45,7 @@ public class LibroAMostrar {
         Id = id;
     }
 
+
     public String getTitulo() {
         return titulo;
     }
@@ -58,6 +59,7 @@ public class LibroAMostrar {
     }
 
     public void setAutores(List<AutoresAMostrar> autores) {
+        autores.forEach(e->e.setLibroAMostrar(this));
         this.autores = autores;
     }
 
