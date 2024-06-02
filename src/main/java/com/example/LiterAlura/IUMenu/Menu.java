@@ -7,6 +7,8 @@ import com.example.LiterAlura.model.dto.LibroAMostrar;
 import com.example.LiterAlura.repository.LibrosRepository;
 import com.example.LiterAlura.service.ConsumeAPI;
 import com.example.LiterAlura.service.ConvierteDatos;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
+import org.springframework.dao.DataIntegrityViolationException;
 
 
 import java.util.InputMismatchException;
@@ -49,7 +51,14 @@ public class Menu {
             switch (opcion){
                 case 1:
                     System.out.println("Escriba libro deseado");
-                    BuscarLibro();
+                    try {
+                        BuscarLibro();
+                    }catch (DataIntegrityViolationException e){
+                        System.out.println("*************************");
+                        System.out.println("Libro ya en base de datos");
+                        System.out.println("*************************");
+                    }
+
                     break;
                 case 2:
                     System.out.println("Libro registrados");

@@ -1,16 +1,31 @@
 package com.example.LiterAlura.model.dto;
 
 import com.example.LiterAlura.model.DatosAutores;
+import jakarta.persistence.*;
 
+
+@Entity
+@Table(name = "autores")
 public class AutoresAMostrar {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
     private String nombre;
-    private String fechaNacimiento;
-    private String fechaMuerte;
+    @Column(name = "fecha_nacimiento",nullable = true)
+    private int fechaNacimiento;
+    @Column(name = "fecha_muerte",nullable = true)
+    private int fechaMuerte;
+
+    @ManyToOne
+    private LibroAMostrar libroAMostrar;
+
+    public AutoresAMostrar(){}
 
     public AutoresAMostrar(DatosAutores datosAutores){
         this.nombre= datosAutores.nombre();
-        this.fechaNacimiento=String.valueOf(datosAutores.fechaNacimiento());
-        this.fechaMuerte=String.valueOf(datosAutores.fechaMuerte());
+        this.fechaNacimiento=datosAutores.fechaNacimiento();
+        this.fechaMuerte=datosAutores.fechaMuerte();
     }
 
     public String getNombre() {
@@ -21,20 +36,28 @@ public class AutoresAMostrar {
         this.nombre = nombre;
     }
 
-    public String getFechaNacimiento() {
+    public int getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(int fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getFechaMuerte() {
+    public int getFechaMuerte() {
         return fechaMuerte;
     }
 
-    public void setFechaMuerte(String fechaMuerte) {
+    public void setFechaMuerte(int fechaMuerte) {
         this.fechaMuerte = fechaMuerte;
+    }
+
+    public LibroAMostrar getLibroAMostrar() {
+        return libroAMostrar;
+    }
+
+    public void setLibroAMostrar(LibroAMostrar libroAMostrar) {
+        this.libroAMostrar = libroAMostrar;
     }
 
     @Override

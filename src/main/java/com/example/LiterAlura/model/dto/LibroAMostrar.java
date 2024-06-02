@@ -17,7 +17,8 @@ public class LibroAMostrar {
     @Column(unique = true)
     private String titulo;
 
-    @Transient
+
+    @OneToMany(mappedBy = "libroAMostrar")
     private List<AutoresAMostrar> autores;
 
     @Transient
@@ -75,6 +76,8 @@ public class LibroAMostrar {
     public void setDescargas(Integer descargas) {
         this.descargas = descargas;
     }
+
+
 
     @Override
     public String toString() {
