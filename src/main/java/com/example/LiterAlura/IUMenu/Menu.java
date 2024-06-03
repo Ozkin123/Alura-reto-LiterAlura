@@ -4,7 +4,9 @@ import com.example.LiterAlura.constantes.URLApiGutendex;
 import com.example.LiterAlura.model.DatosLibro;
 import com.example.LiterAlura.model.DatosListaLibros;
 
+import com.example.LiterAlura.model.dto.AutorEntidad;
 import com.example.LiterAlura.model.dto.LibroEntidad;
+import com.example.LiterAlura.repository.AutoresRepository;
 import com.example.LiterAlura.repository.LibrosRepository;
 import com.example.LiterAlura.service.ConsumeAPI;
 import com.example.LiterAlura.service.ConvierteDatos;
@@ -24,9 +26,11 @@ public class Menu {
 
 
     private LibrosRepository librosRepository;
+    private AutoresRepository autoresRepository;
 
-    public Menu(LibrosRepository librosRepository) {
+    public Menu(LibrosRepository librosRepository,AutoresRepository autoresRepository) {
         this.librosRepository =librosRepository;
+        this.autoresRepository=autoresRepository;
     }
 
 
@@ -68,7 +72,7 @@ public class Menu {
                     break;
                 case 3:
                     System.out.println("Autores registrados");
-                    scanner.nextLine();
+                    listarAutores();
                     break;
                 case 4:
                     System.out.println("Autores Vivos");
@@ -114,6 +118,12 @@ public class Menu {
         List<LibroEntidad> lista = librosRepository.findAll();
         System.out.println(lista);
     }
+    public void listarAutores(){
+       List<AutorEntidad> autoresLista = autoresRepository.findAll();
+       System.out.println(autoresLista);
+
+    }
+
 
 
 }
