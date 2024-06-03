@@ -3,10 +3,9 @@ package com.example.LiterAlura.model.dto;
 import com.example.LiterAlura.model.DatosAutores;
 import jakarta.persistence.*;
 
-
 @Entity
 @Table(name = "autores")
-public class AutoresAMostrar {
+public class AutorEntidad {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,17 +16,18 @@ public class AutoresAMostrar {
     @Column(name = "fecha_muerte",nullable = true)
     private int fechaMuerte;
 
-    @ManyToOne
-    @JoinColumn(name = "libros")
-    private LibroAMostrar libroAMostrar;
 
-    public AutoresAMostrar(){}
 
-    public AutoresAMostrar(DatosAutores datosAutores){
+    public AutorEntidad() {
+    }
+
+    public AutorEntidad(DatosAutores datosAutores){
         this.nombre= datosAutores.nombre();
         this.fechaNacimiento=datosAutores.fechaNacimiento();
         this.fechaMuerte=datosAutores.fechaMuerte();
     }
+
+
 
 
 
@@ -62,14 +62,6 @@ public class AutoresAMostrar {
 
     public void setFechaMuerte(int fechaMuerte) {
         this.fechaMuerte = fechaMuerte;
-    }
-
-    public LibroAMostrar getLibroAMostrar() {
-        return libroAMostrar;
-    }
-
-    public void setLibroAMostrar(LibroAMostrar libroAMostrar) {
-        this.libroAMostrar = libroAMostrar;
     }
 
     @Override

@@ -4,11 +4,12 @@ import com.example.LiterAlura.model.DatosLibro;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "libros")
-public class LibroAMostrar {
+public class LibroEntidad {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,25 +18,32 @@ public class LibroAMostrar {
     @Column(unique = true)
     private String titulo;
 
-
-    @OneToMany(mappedBy = "libroAMostrar", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<AutoresAMostrar> autores;
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "autores_id", referencedColumnName = "Id")
+    private AutorEntidad autorEntidad;
 
     private List<String> lenguajes;
 
 
     private Integer descargas;
 
-    public LibroAMostrar(){}
 
 
-    public LibroAMostrar(DatosLibro datosLibro){
+
+    public LibroEntidad(){}
+
+
+    public LibroEntidad(DatosLibro datosLibro){
         this.titulo=datosLibro.title();
-        this.autores=datosLibro.autores().stream().map(AutoresAMostrar::new).collect(Collectors.toList());
+        this.autorEntidad=null;
+                Optional<AutorEntidad> autor = datosLibro.autores().stream().map(AutorEntidad::new).findFirst();
+                if(autor.isPresent()){
+                    this.autorEntidad=autor.get();
+                }
         this.lenguajes=datosLibro.lenguajes();
         this.descargas=datosLibro.descargas();
     }
+
 
     public Long getId() {
         return Id;
@@ -54,13 +62,12 @@ public class LibroAMostrar {
         this.titulo = titulo;
     }
 
-    public List<AutoresAMostrar> getAutores() {
-        return autores;
+    public AutorEntidad getAutorEntidad() {
+        return autorEntidad;
     }
 
-    public void setAutores(List<AutoresAMostrar> autores) {
-        autores.forEach(e->e.setLibroAMostrar(this));
-        this.autores = autores;
+    public void setAutorEntidad(AutorEntidad autorEntidad) {
+        this.autorEntidad = autorEntidad;
     }
 
     public List<String> getLenguajes() {
@@ -85,7 +92,7 @@ public class LibroAMostrar {
     public String toString() {
         return  "*********************************************" + '\n' +
                 "titulo = " + titulo + '\n' +
-                "Autores = " + autores + '\n' +
+                "Autor = " + autorEntidad + '\n' +
                 "lenguajes =" + lenguajes +'\n'+
                 "descargas =" + descargas+'\n'+
                 "*********************************************";

@@ -3,7 +3,8 @@ package com.example.LiterAlura.IUMenu;
 import com.example.LiterAlura.constantes.URLApiGutendex;
 import com.example.LiterAlura.model.DatosLibro;
 import com.example.LiterAlura.model.DatosListaLibros;
-import com.example.LiterAlura.model.dto.LibroAMostrar;
+
+import com.example.LiterAlura.model.dto.LibroEntidad;
 import com.example.LiterAlura.repository.LibrosRepository;
 import com.example.LiterAlura.service.ConsumeAPI;
 import com.example.LiterAlura.service.ConvierteDatos;
@@ -12,6 +13,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -52,7 +54,7 @@ public class Menu {
                 case 1:
                     System.out.println("Escriba libro deseado");
                     try {
-                        BuscarLibro();
+                        buscarLibro();
                     }catch (DataIntegrityViolationException e){
                         System.out.println("*************************");
                         System.out.println("Libro ya en base de datos");
@@ -62,7 +64,7 @@ public class Menu {
                     break;
                 case 2:
                     System.out.println("Libro registrados");
-                    scanner.nextLine();
+                    listarLibros();
                     break;
                 case 3:
                     System.out.println("Autores registrados");
@@ -91,7 +93,7 @@ public class Menu {
 
 
     }
-    public  void BuscarLibro(){
+    public  void buscarLibro(){
 
         String libroDeseado=scanner.nextLine();
         var json = consumeApi.obternerDatos(URLApiGutendex.URL_LIBROS+libroDeseado.replace(" ","%20"));
@@ -99,13 +101,18 @@ public class Menu {
         var datos= convierteDatos.obtenerDatos(json, DatosListaLibros.class);
         Optional<DatosLibro> libroBusqueda =datos.libros().stream().findFirst();
         if(libroBusqueda.isPresent()){
-            LibroAMostrar libroAMostrar= new LibroAMostrar(libroBusqueda.get());
-            System.out.println(libroAMostrar);
-            librosRepository.save(libroAMostrar);
+            LibroEntidad libroEntidad= new LibroEntidad(libroBusqueda.get());
+            System.out.println(libroEntidad);
+            librosRepository.save(libroEntidad);
 
         }else {System.out.println("libro no encontrado");
         }
 
+    }
+
+    public void listarLibros(){
+        List<LibroEntidad> lista = librosRepository.findAll();
+        System.out.println(lista);
     }
 
 
