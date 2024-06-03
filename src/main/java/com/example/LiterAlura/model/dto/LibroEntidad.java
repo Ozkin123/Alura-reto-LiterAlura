@@ -22,7 +22,7 @@ public class LibroEntidad {
     @JoinColumn(name = "autores_id", referencedColumnName = "Id")
     private AutorEntidad autorEntidad;
 
-    private List<String> lenguajes;
+    private String lenguaje;
 
 
     private Integer descargas;
@@ -40,7 +40,11 @@ public class LibroEntidad {
                 if(autor.isPresent()){
                     this.autorEntidad=autor.get();
                 }
-        this.lenguajes=datosLibro.lenguajes();
+        this.lenguaje=null;
+                Optional<String> lengua = datosLibro.lenguajes().stream().findFirst();
+                if(lengua.isPresent()){
+                    this.lenguaje=lengua.get();
+                }
         this.descargas=datosLibro.descargas();
     }
 
@@ -70,12 +74,12 @@ public class LibroEntidad {
         this.autorEntidad = autorEntidad;
     }
 
-    public List<String> getLenguajes() {
-        return lenguajes;
+    public String getLenguaje() {
+        return lenguaje;
     }
 
-    public void setLenguajes(List<String> lenguajes) {
-        this.lenguajes = lenguajes;
+    public void setLenguaje(String lenguaje) {
+        this.lenguaje = lenguaje;
     }
 
     public Integer getDescargas() {
@@ -93,8 +97,8 @@ public class LibroEntidad {
         return  "*********************************************" + '\n' +
                 "titulo = " + titulo + '\n' +
                 "Autor = " + autorEntidad + '\n' +
-                "lenguajes =" + lenguajes +'\n'+
-                "descargas =" + descargas+'\n'+
+                "lenguajes = " + lenguaje +'\n'+
+                "descargas = " + descargas+'\n'+
                 "*********************************************";
     }
 }

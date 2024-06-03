@@ -76,7 +76,7 @@ public class Menu {
                     break;
                 case 4:
                     System.out.println("Autores Vivos");
-                    scanner.nextLine();
+                    listarAutoreFecha();
                     break;
                 case 5:
                     System.out.println("Libros por idioma");
@@ -120,8 +120,20 @@ public class Menu {
     }
     public void listarAutores(){
        List<AutorEntidad> autoresLista = autoresRepository.findAll();
-       System.out.println(autoresLista);
+       autoresLista.forEach(System.out::println);
 
+    }
+
+    public void listarLibroPorLenguaje(){
+        String n = scanner.nextLine();
+        List<LibroEntidad> listaLibroLengua= librosRepository.findByLenguajeContainsIgnoreCase(n);
+        System.out.println(listaLibroLengua);
+    }
+
+    public void listarAutoreFecha(){
+        int fechaRequerida = scanner.nextInt();
+        List<AutorEntidad> autoresVivos = autoresRepository.autoresVivosEnDetermiandaFecha(fechaRequerida);
+        System.out.println(autoresVivos);
     }
 
 

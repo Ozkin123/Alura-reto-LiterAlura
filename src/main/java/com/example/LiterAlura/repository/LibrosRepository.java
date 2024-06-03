@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface LibrosRepository extends JpaRepository<LibroEntidad,Long> {
 
-
+         List<LibroEntidad> findByLenguajeContainsIgnoreCase(String n);
 
 
 }
