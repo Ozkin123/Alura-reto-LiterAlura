@@ -81,6 +81,11 @@ public class Menu {
                     }catch (InputMismatchException e){
                         System.out.println("opcion no valida");
                     }
+                    if(fechaRequerida>2024){
+                        fechaRequerida=2023;
+                        System.out.println("fecha no valida se asigna fecha 2023");
+                    }
+
                     listarAutoreFecha(fechaRequerida);
                     scanner.nextLine();
 

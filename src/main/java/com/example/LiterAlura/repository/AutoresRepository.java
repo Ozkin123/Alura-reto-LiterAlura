@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface AutoresRepository extends JpaRepository<AutorEntidad,Long> {
 
-    @Query("SELECT s FROM AutorEntidad s WHERE s.fechaMuerte < :fecha" )
+    @Query("SELECT s FROM AutorEntidad s WHERE s.fechaNacimiento <= :fecha AND s.fechaMuerte > :fecha" )
     List<AutorEntidad> autoresVivosEnDetermiandaFecha(int fecha);
 
 
