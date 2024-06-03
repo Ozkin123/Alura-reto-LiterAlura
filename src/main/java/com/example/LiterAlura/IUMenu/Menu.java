@@ -10,7 +10,6 @@ import com.example.LiterAlura.repository.AutoresRepository;
 import com.example.LiterAlura.repository.LibrosRepository;
 import com.example.LiterAlura.service.ConsumeAPI;
 import com.example.LiterAlura.service.ConvierteDatos;
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.dao.DataIntegrityViolationException;
 
 
@@ -76,19 +75,50 @@ public class Menu {
                     break;
                 case 4:
                     System.out.println("Autores Vivos");
-                    listarAutoreFecha();
+                    int fechaRequerida=0;
+                    try {
+                        fechaRequerida=scanner.nextInt();
+                    }catch (InputMismatchException e){
+                        System.out.println("opcion no valida");
+                    }
+                    listarAutoreFecha(fechaRequerida);
+                    scanner.nextLine();
+
                     break;
                 case 5:
                     System.out.println("Libros por idioma");
-                    scanner.nextLine();
+                    System.out.println("Eliga un idioma");
+                    System.out.println("1. Libros en Ingles");
+                    System.out.println("2. Libros en Español");
+                    int opcioBinari = -1;
+                     do{
+                         try {
+                             opcioBinari=scanner.nextInt();
+                         }catch (InputMismatchException e){
+                             System.out.println("opcion no valida");
+                             opcioBinari=0;
+                         }
+
+                         switch (opcioBinari){
+                             case 1:
+                                 listarLibroPorLenguajeIngles();
+                                 opcioBinari=0;
+                                 break;
+                             case 2:
+                                 listarLibroPorLenguajeEspaniol();
+                                 opcioBinari=0;
+                                 break;
+                             default:
+                                 System.out.println("opcion no valida");
+                                 opcioBinari=0;
+                         }
+                     }while (opcioBinari!=0);
                     break;
                 case 0:
                     System.out.println("Gracias por su visita");
-                    scanner.nextLine();
                     break;
                 default:
                     System.out.println("opcion no valida");
-                    scanner.nextLine();
 
             }
         }while (opcion!=0);
@@ -124,17 +154,25 @@ public class Menu {
 
     }
 
-    public void listarLibroPorLenguaje(){
-        String n = scanner.nextLine();
-        List<LibroEntidad> listaLibroLengua= librosRepository.findByLenguajeContainsIgnoreCase(n);
+    public void listarLibroPorLenguajeIngles(){
+        List<LibroEntidad> listaLibroLengua= librosRepository.encontrarPorLenguajeIngles();
         System.out.println(listaLibroLengua);
     }
 
-    public void listarAutoreFecha(){
-        int fechaRequerida = scanner.nextInt();
-        List<AutorEntidad> autoresVivos = autoresRepository.autoresVivosEnDetermiandaFecha(fechaRequerida);
-        System.out.println(autoresVivos);
+    public void listarLibroPorLenguajeEspaniol(){
+        List<LibroEntidad> listaLibroLengua= librosRepository.encontrarPorLenguajeEspaniol();
+        System.out.println(listaLibroLengua);
     }
+
+    public void listarAutoreFecha(int fechaRequerida){
+        List<AutorEntidad> autoresVivos = autoresRepository.autoresVivosEnDetermiandaFecha(fechaRequerida);
+        if(autoresVivos.size()==0){
+            System.out.println("no hay autores");
+        }else System.out.println(autoresVivos);
+
+    }
+
+
 
 
 
